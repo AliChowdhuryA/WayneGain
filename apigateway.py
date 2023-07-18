@@ -9,6 +9,8 @@ REGISTER_API_URL = "http://localhost:5001/api/register"
 SEND_EMAIL_API_URL = "http://localhost:5003/api/send_email"
 TRACK_WORKOUT_URL = "http://localhost:5004/api/track_workout"
 TRACK_WEIGHT_URL = "http://localhost:5005/api/track_weight"
+PERSONAL_GOALS_URL = "http://localhost:5006/api/random_goal"
+
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -39,6 +41,11 @@ def track_weight():
     data = request.get_json()
     response = requests.post(TRACK_WEIGHT_URL, json=data)
     return jsonify(response.json())
+
+@app.route('/api/random_goal', methods=['GET'])
+def random_goal():
+    response = requests.get(PERSONAL_GOALS_URL)
+    return jsonify(response.json()), response.status_code
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
