@@ -17,23 +17,33 @@ stretches_by_muscle = {
     "glutes": ["Piriformis Stretch", "Seated Glute Stretch", "Supine Glute Stretch"],
 }
 
-@app.route('/api/get_stretches', methods=['POST','GET'])
+
+@app.route('/api/get_stretches', methods=['POST', 'GET'])
 def get_stretches():
     if request.method == 'POST':
         data = request.get_json()
         username = data['username']
         muscle = data['muscle']
         return handle_stretch_request(muscle)
-    
-
     else:
-        return '''<form method="post">
-        <label for="username">Enter your username:</label>
-        <input type="text" id="username" name="username">
-        <label for="muscle">Enter a muscle (e.g., hamstrings, shoulders):</label>
-        <input type="text" id="muscle" name="muscle">
-        <input type="submit" value="Submit">
-    </form>'''
+        #if req in url
+        muscle = request.args.get('muscle')
+        if muscle is not None:
+            return handle_stretch_request(muscle)
+        #use text fields in webpage
+        else:
+            return '''<form method="get">
+                    <label for="username">Enter your username:</label>
+                    <input type="text" id="username" name="username">
+                    <label for="muscle">Enter a muscle (e.g., hamstrings, shoulders):</label>
+                    <input type="text" id="muscle" name="muscle">
+                    <input type="submit" value="Submit">
+                </form>'''
+
+
+
+
+
 def handle_stretch_request(muscle):
     if muscle in stretches_by_muscle:
         stretches = stretches_by_muscle[muscle]
