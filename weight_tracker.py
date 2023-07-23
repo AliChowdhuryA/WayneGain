@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
 from datetime import date
 
-app = Flask(__name__)
+app_weight_tracker = Flask(__name__)
 
-@app.route('/api/track_weight', methods=['POST', 'GET'])
+@app_weight_tracker.route('/api/track_weight', methods=['POST', 'GET'])
 def track_workout():
     if request.method == 'POST':
         # Post Data
@@ -27,4 +27,4 @@ def track_workout():
         </form>'''
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app_weight_tracker.run(port=5005, debug=True)
