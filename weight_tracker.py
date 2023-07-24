@@ -6,9 +6,10 @@ app_weight_tracker = Flask(__name__)
 @app_weight_tracker.route('/api/track_weight', methods=['POST', 'GET'])
 def track_workout():
     if request.method == 'POST':
+        data = request.get_json()
         # Post Data
-        username = request.form['username']
-        weight = request.form['weight']
+        username = data['username']
+        weight = data['weight']
         today = date.today().strftime('%Y-%m-%d')
         submission = {
             'username': username,

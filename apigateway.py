@@ -34,7 +34,7 @@ def track_workout():
     response = requests.post(TRACK_WORKOUT_URL, json=data)
     return jsonify(response.json())
 
-@app.route('/api/track_weight', methods=['POST'])
+@app.route('/api/track_weight', methods=['POST', 'GET'])
 def track_weight():
     data = request.get_json()
     response = requests.post(TRACK_WEIGHT_URL, json=data)
