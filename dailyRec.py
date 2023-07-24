@@ -9,8 +9,8 @@ recipes = [
         "name": "Grilled Buttermilk Chicken",
         "ingredients": ["buttermilk", "thyme sprigs", "garlic cloves", "salt","boneless skinless chicken breast"],
         "instructions": "Place the buttermilk, thyme, garlic and salt in a large bowl or shallow dish. Add chicken and turn to coat. Refrigerate 8 hours or overnight, turning occasionally.Drain chicken, discarding marinade. Grill, covered, over medium heat until a thermometer reads 165°, 5-7 minutes per side.", 
-        "preptime": 10,
-        "cooktime": 7,
+        "ptime": 10,
+        "ctime": 7,
     },
     {
         "name": "No-Bake Chocolate Oatmeal Cookies",
@@ -33,11 +33,11 @@ def getRandomRecipe():
 
     formatted_output = (
 
-        f'"{random_recipe["name"]}",\n'
-        f'Ingredients: {", ".join(random_recipe["ingredients"])},\n'
-        f'"{random_recipe["instructions"]}",\n'
+        f'"{random_recipe["name"]}",'
+        f'Ingredients: {", ".join(random_recipe["ingredients"])},'
+        f'"{random_recipe["instructions"]},"'
         f"Prep Time " 
-        f'{random_recipe["ptime"]},\n'
+        f'{random_recipe["ptime"]},'
         f"Cook Time "
         f'{random_recipe["ctime"]}'
 
