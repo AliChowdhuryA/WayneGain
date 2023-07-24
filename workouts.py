@@ -6,10 +6,12 @@ app_track_workout = Flask(__name__)
 def track_workout():
     if request.method == 'POST':
         # Post Data
-        username = request.form['username']
-        workout = request.form['workout']
-        time = request.form['time']
-        date = request.form['date']
+        data = request.get_json()
+
+        username = data['username']
+        workout = data['workout']
+        time = data['time']
+        date = data['date']
         submission = {
             'username': username,
             'workout': workout,
