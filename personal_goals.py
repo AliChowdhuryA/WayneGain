@@ -15,9 +15,9 @@ daily_goals = [
 
 ]
 
-@app.route('/random_goal', methods=['GET'])
+@app.route('/api/random_goal', methods=['GET'])
 def get_random_goal():
     return jsonify({"goal": random.choice(daily_goals)}), 200
-
+#
 if __name__ == '__main__':
     app.run(debug=True)
