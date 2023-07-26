@@ -20,8 +20,8 @@ class login(Resource):
             return "Success"
         return "Fail"
 
-api.add_resource(register, "/register/<string:username>/<string:login>")
-api.add_resource(login, "/login/<string:username>/<string:login>")
+api.add_resource(register, "/register/<string:username>/<string:password>")
+api.add_resource(login, "/login/<string:username>/<string:password>")
 
 if __name__ == "__main__":
     db.createDatabase()
