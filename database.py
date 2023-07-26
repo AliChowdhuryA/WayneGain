@@ -41,7 +41,7 @@ def checkAccount(username = "", password = ""):
     return True
 
 # return True of username is available else return False
-def checkUsername(username = ""):
+def checkUsernameIsAvailable(username = ""):
     connection = sqlite3.connect("login.db")
     cursor = connection.cursor()
     cursor.execute(f"SELECT * FROM login WHERE username='{username}'")
@@ -53,7 +53,7 @@ def checkUsername(username = ""):
 
 # Delete user when username is passed, return False if deletion failed
 def deleteAccount(username = ""):
-    if checkUsername(username):
+    if checkUsernameIsAvailable(username):
         return False
     connection = sqlite3.connect("login.db")
     cursor = connection.cursor()
