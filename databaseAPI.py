@@ -19,8 +19,13 @@ class login(Resource):
         if db.checkAccount(username, password):
             return "Success"
         return "Fail"
-
+# use localhost/register/{username}/{password}
+# will return success if account created, else reutrn fail
 api.add_resource(register, "/register/<string:username>/<string:password>")
+
+
+# use localhost/login/{username}/{password}
+# will return success if account is in database, else reutrn fail
 api.add_resource(login, "/login/<string:username>/<string:password>")
 
 if __name__ == "__main__":
