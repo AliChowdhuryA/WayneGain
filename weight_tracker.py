@@ -1,20 +1,19 @@
 from flask import Flask, request, jsonify
+from datetime import date
 
 app = Flask(__name__)
 
-@app.route('/api/track_workout', methods=['POST', 'GET'])
+@app.route('/api/track_weight', methods=['POST', 'GET'])
 def track_workout():
     if request.method == 'POST':
         # Post Data
         username = request.form['username']
-        workout = request.form['workout']
-        time = request.form['time']
-        date = request.form['date']
+        weight = request.form['weight']
+        today = date.today().strftime('%Y-%m-%d')
         submission = {
             'username': username,
-            'workout': workout,
-            'time': time,
-            'date': date
+            'weight': weight,
+            'date': today
         }
         return jsonify(submission)
     else:
@@ -22,12 +21,8 @@ def track_workout():
         return '''<form method = "post">
         <p>Enter Username:</p>
         <p><input type = "text" name = "username"/></p>
-        <p>Enter Workout:</p>
-        <p><input type = "text" name = "workout"/></p>
-        <p>Enter Time Spent (Hours:Minutes):</p>
-        <p><input type = "text" name = "time"/></p>
-        <p>Enter Date (MM/DD/YYYY):</p>
-        <p><input type = "date" name = "date"/></p>
+        <p>Enter Weight:</p>
+        <p><input type = "number" name = "weight"/></p>
         <p><input type = "submit" name = "submit"/></p>
         </form>'''
 
