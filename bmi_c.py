@@ -57,7 +57,7 @@ def bmiCal():
                 <h3> Less Than 18.5 Underweight </h3>
                 <h3> 18.5 to 24.9 Normal Weight </h3>
                 <h3> 25 to 29.9 Overweight </h3>
-                <h3> More Than 30 Underweight </h3>
+                <h3> More Than 30 Obese </h3>
                 </br>
             <form action="/api/bmi_calc" method="post">
                 <label for="weight">Weight(lb)   </label>
