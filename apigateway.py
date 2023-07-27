@@ -13,6 +13,11 @@ PERSONAL_GOALS_URL = "http://localhost:5006/api/random_goal"
 BMI_CALCULATOR_URL = "http://localhost:5007/api/bmi_calc"
 GET_STRETCHES_URL = "http://localhost:5008/api/get_stretches"
 
+DAILY_RECIPE_URL = "http://localhost:5010/api/daily_recipe"
+
+DAILY_CALORIES_URL = "http://localhost:5009/api/calorie_input"
+
+
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -60,6 +65,18 @@ def get_stretches():
     data = request.get_json()
     response = requests.post(GET_STRETCHES_URL, json=data)
     return jsonify(response.json())
+
+@app.route('/api/calorie_input', methods=['POST', 'GET'])
+def calorie_input():
+    data = request.get_json()
+    response = requests.post(DAILY_CALORIES_URL, json=data)
+    return jsonify(response.json())
+
+@app.route('/api/daily_recipe', methods=['POST', 'GET'])
+def daily_recipe():
+    response = requests.get(DAILY_RECIPE_URL)
+    return jsonify(response.json()), response.status_code
+
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
