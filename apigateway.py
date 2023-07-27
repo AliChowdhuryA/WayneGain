@@ -12,6 +12,7 @@ TRACK_WEIGHT_URL = "http://localhost:5005/api/track_weight"
 PERSONAL_GOALS_URL = "http://localhost:5006/api/random_goal"
 BMI_CALCULATOR_URL = "http://localhost:5007/api/bmi_calc"
 GET_STRETCHES_URL = "http://localhost:5008/api/get_stretches"
+DAILY_CALORIES_URL = "http://localhost:5009/api/daily_calories"
 
 DAILY_RECIPE_URL = "http://localhost:5010/api/daily_recipe"
 
@@ -66,17 +67,25 @@ def get_stretches():
     response = requests.post(GET_STRETCHES_URL, json=data)
     return jsonify(response.json())
 
+<<<<<<< HEAD
 @app.route('/api/calorie_input', methods=['POST', 'GET'])
 def calorie_input():
+=======
+@app.route('/api/daily_calories', methods=['POST'])
+def daily_calories():
+>>>>>>> 80ca57a (updated daily_calories.py and apigateway.py to work with each other)
     data = request.get_json()
     response = requests.post(DAILY_CALORIES_URL, json=data)
     return jsonify(response.json())
 
+<<<<<<< HEAD
 @app.route('/api/daily_recipe', methods=['POST', 'GET'])
 def daily_recipe():
     response = requests.get(DAILY_RECIPE_URL)
     return jsonify(response.json()), response.status_code
 
 
+=======
+>>>>>>> 80ca57a (updated daily_calories.py and apigateway.py to work with each other)
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
