@@ -1,15 +1,17 @@
 from flask import Flask, request, jsonify
 
-app = Flask(__name__)
+app_track_workout = Flask(__name__)
 
-@app.route('/api/track_workout', methods=['POST', 'GET'])
+@app_track_workout.route('/api/track_workout', methods=['POST', 'GET'])
 def track_workout():
     if request.method == 'POST':
         # Post Data
-        username = request.form['username']
-        workout = request.form['workout']
-        time = request.form['time']
-        date = request.form['date']
+        data = request.get_json()
+
+        username = data['username']
+        workout = data['workout']
+        time = data['time']
+        date = data['date']
         submission = {
             'username': username,
             'workout': workout,
@@ -32,4 +34,4 @@ def track_workout():
         </form>'''
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app_track_workout.run(port=5004, debug=True)

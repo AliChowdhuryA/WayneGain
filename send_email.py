@@ -14,7 +14,7 @@ app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 
-@app.route('/send_email', methods=["POST"])
+@app.route('/api/send_email', methods=["POST"])
 def send_email():
     # Gets email data from the request body
     email_data = request.get_json()
@@ -28,8 +28,8 @@ def send_email():
     )
     mail.send(msg)
 
-    return "Email sent successfully"
+    return {"email_success":"Email sent successfully"}
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5003)
