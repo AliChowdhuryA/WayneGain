@@ -19,7 +19,7 @@ def interpret_bmi(bmi):
         return "Underweight"
 
     elif 18.5 <= bmi < 24.9:
-        return "Normal weight"
+        return "normal weight"
 
     elif 25 <= bmi < 29.9:
         return "Overweight"
@@ -32,26 +32,17 @@ def interpret_bmi(bmi):
 def bmiCal():
     if request.method == 'POST':
         try:
-            wPound = float(request.form['weight'])
+            data = request.get_json()
+            #wPound = float(request.form['weight'])
+            weight = data['weight']
+            hFeet = data['hFeet']
 
-            hFeet = float(request.form['hFeet'])
+            hInch = data['hInch']
 
-            hInch = float(request.form['hInch'])
-
-            bmi = calculate_bmi(wPound, hFeet, hInch)
+            bmi = calculate_bmi(weight, hFeet, hInch)
             category = interpret_bmi(bmi)
 
-            result = f"""
-                <h1>BMI Calculator</h1>
-                <br>
-                <h3> Less Than 18.5 Underweight </h3>
-                <h3> 18.5 to 24.9 Normal Weight </h3>
-                <h3> 25 to 29.9 Overweight </h3>
-                <h3> More Than 30 Underweight </h3>
-                </br>
-                <P>Current BMI: {bmi:.1f}</P>
-                <p>You are {category}.</p>
-            """
+            result = f""" Current BMI: {bmi:.1f}, You are {category}"""
 
             return jsonify(result)
 

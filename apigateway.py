@@ -51,38 +51,9 @@ def random_goal():
 @app.route('/api/bmi_calc',methods=['GET','POST'])
 def bmi_calc():
     if request.method == 'POST':
-        data = {
-            "weight": request.form['weight'],
-            "hFeet": request.form['hFeet'],
-            "hInch": request.form['hInch']
-        }
-        response = requests.post(BMI_CALCULATOR_URL, data=data)
+        data = request.get_json()
+        response = requests.post(BMI_CALCULATOR_URL, json=data)
         return jsonify(response.json()), response.status_code
-
-    else:
-        input_template = """
-            <h1>BMI Calculator</h1>
-                <br>
-                <h3> Less Than 18.5 Underweight </h3>
-                <h3> 18.5 to 24.9 Normal Weight </h3>
-                <h3> 25 to 29.9 Overweight </h3>
-                <h3> More Than 30 Underweight </h3>
-                </br>
-            <form action="/api/bmi_calc" method="post">
-                <label for="weight">Weight(lb)   </label>
-                <input type="text" name="weight" id="weight" required>
-                <br>
-                <label for="hFeet">Height (ft)    </label>
-                <input type="text" name="hFeet" id="hFeet" required>
-                <br>
-                <label for="hInch">Height (in)    </label>
-                <input type="text" name="hInch" id="hInch" required>
-                </br>
-                <input type="submit" value="Submit">
-            </form>
-        """
-        
-        return render_template_string(input_template)
 
 @app.route('/api/get_stretches', methods=['POST', 'GET'])
 def get_stretches():
