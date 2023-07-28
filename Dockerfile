@@ -1,10 +1,16 @@
 # Use the official Python image as the base image
 FROM python:3.9
 
+RUN apt-get update && apt-get install -y supervisor
+RUN mkdir -p /var/log/supervisor
+
+# Create a new non-root user
+RUN groupadd -r myuser && useradd -r -g myuser myuser
+
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Python files for each app to the container
+# Copy all the Python files for each app to the /app directory inside the container
 COPY apigateway.py apigateway.py
 COPY databaseAPI.py databaseAPI.py
 COPY send_email.py send_email.py
@@ -16,11 +22,15 @@ COPY personal_goals.py personal_goals.py
 COPY workouts.py workouts.py
 COPY weight_tracker.py weight_tracker.py
 COPY login.py login.py
-# Install the required dependencies for each app
+
+# Install the required dependencies for all apps (Flask and requests)
 RUN pip install --no-cache-dir Flask
 
-# Expose port 5000 for all apps
-EXPOSE 5000
+# Copy the Supervisor configuration file
+COPY supervisord.conf /etc/supervisord.conf
 
-# Start each app on a different port
-CMD ["python", "start_apps.py"]
+# Expose port 5000 for all apps
+EXPOSE 5000-5010
+
+# Start Supervisor to manage the processes
+CMD ["/usr/bin/supervisord"]

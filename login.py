@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 
-app_login = Flask(__name__)
+app = Flask(__name__)
 
-@app_login.route('/api/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     if request.method == "GET":
         #when using the GET method in Postman, program will return this
@@ -17,4 +17,4 @@ def login():
         return jsonify({'message': 'User logged in successfully'})
 
 if __name__ == '__main__':
-    app_login.run(port=5002, debug=True)
+    app.run(port=5002, debug=True)

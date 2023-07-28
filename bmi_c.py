@@ -76,5 +76,4 @@ def bmiCal():
         return render_template_string(input_template)
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    app.run(port=5007)
+    app.run(port=5007,debug=True)

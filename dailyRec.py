@@ -35,6 +35,5 @@ def getRandomRecipe():
      
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(port=8000)
+    app.run(port=5010,debug=True)
 
