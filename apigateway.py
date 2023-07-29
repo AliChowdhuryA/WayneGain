@@ -66,7 +66,7 @@ def get_stretches():
     response = requests.post(GET_STRETCHES_URL, json=data)
     return jsonify(response.json())
 
-@app.route('/api/calorie_input', methods=['POST', 'GET'])
+@app.route('/api/calorie_input', methods=['POST'])
 def calorie_input():
     data = request.get_json()
     response = requests.post(DAILY_CALORIES_URL, json=data)
