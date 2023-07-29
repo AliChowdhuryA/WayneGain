@@ -31,4 +31,4 @@ api.add_resource(login, "/login/<string:username>/<string:password>")
 
 if __name__ == "__main__":
     db.createDatabase()
-    app.run(debug=True)
+    app.run(debug=True, port=5050)
