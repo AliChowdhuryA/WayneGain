@@ -27,27 +27,12 @@ recipes = [
         "ctime": 10,
     }
 ]
-@app.route('/Random')
+@app.route('/api/daily_recipe', methods=['GET'])
 def getRandomRecipe():
     random_recipe = random.choice(recipes)
 
-    formatted_output = (
-        f'<!DOCTYPE html>'
-        f'<html>'
-        f'<head>'
-        f'    <title>Random Recipe</title>'
-        f'</head>'
-        f'<body>'
-        f'    <h1>{random_recipe["name"]}</h1>'
-        f'    <p>Ingredients: {", ".join(random_recipe["ingredients"])}</p>'
-        f'    <p>Instructions: {random_recipe["instructions"]}</p>'
-        f'    <p>Prep Time: {random_recipe["ptime"]} minutes</p>'
-        f'    <p>Cook Time: {random_recipe["ctime"]} minutes</p>'
-        f'</body>'
-        f'</html>'
-    )
-
-    return formatted_output
+    return jsonify(random_recipe), 200
+     
 
 if __name__ == '__main__':
     app.debug = True
