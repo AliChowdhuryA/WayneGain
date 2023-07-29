@@ -1,20 +1,21 @@
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request, jsonify
 from datetime import date
 app = Flask(__name__)
 
-# tested on postman using localhost:5009/api/daily_calories
+# tested on postman using localhost:5000/calorie_input
 # will return a json of calories and today date
 # if fail will return a string of the error
-@app.route('/api/daily_calories',methods = ['POST'])
+@app.route('/api/calorie_input',methods = ['POST'])
 def daily_calories():
     if request.method == 'POST':
-        inputData = request.get_json()
-        data = inputData['cal']
+        #data = request.args.get("cal")
+        data = request.get_json()
         if(data is None):
             return {"Error":"No data has been passed"}
         today = date.today()
-        return {"date" : today, "calories" : data}
-    return {"Error": "Not POST"}
+        caloric_intake = data['caloric_intake']
+        return jsonify({"date" : today, "calories" : caloric_intake})
+    #return "Error"
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5009)
+   app.run(port=5009,debug=True)

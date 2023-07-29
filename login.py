@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
 import requests
 
-app_login = Flask(__name__)
+app = Flask(__name__)
 
-@app_login.route('/api/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     if request.method == "POST":
         data = request.get_json()
@@ -19,4 +19,4 @@ def login():
     return {"Error": "No Post"}
 
 if __name__ == '__main__':
-    app_login.run(port=5002, debug=True)
+    app.run(port=5002, debug=True)
