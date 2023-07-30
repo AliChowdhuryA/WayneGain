@@ -4,8 +4,8 @@ import requests
 app = Flask(__name__)
 
 # URLs of the other microservices
-LOGIN_API_URL = "http://localhost:5002/api/login"
 REGISTER_API_URL = "http://localhost:5001/api/register"
+LOGIN_API_URL = "http://localhost:5002/api/login"
 SEND_EMAIL_API_URL = "http://localhost:5003/api/send_email"
 TRACK_WORKOUT_URL = "http://localhost:5004/api/track_workout"
 TRACK_WEIGHT_URL = "http://localhost:5005/api/track_weight"
@@ -13,10 +13,7 @@ PERSONAL_GOALS_URL = "http://localhost:5006/api/random_goal"
 BMI_CALCULATOR_URL = "http://localhost:5007/api/bmi_calc"
 GET_STRETCHES_URL = "http://localhost:5008/api/get_stretches"
 DAILY_CALORIES_URL = "http://localhost:5009/api/daily_calories"
-
 DAILY_RECIPE_URL = "http://localhost:5010/api/daily_recipe"
-
-DAILY_CALORIES_URL = "http://localhost:5009/api/calorie_input"
 
 
 @app.route('/api/login', methods=['POST'])
@@ -67,7 +64,7 @@ def get_stretches():
     response = requests.post(GET_STRETCHES_URL, json=data)
     return jsonify(response.json())
 
-@app.route('/api/calorie_input', methods=['POST'])
+@app.route('/api/daily_calories', methods=['POST'])
 def calorie_input():
     data = request.get_json()
     response = requests.post(DAILY_CALORIES_URL, json=data)
