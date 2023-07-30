@@ -19,7 +19,7 @@ RUN groupadd -r myuser && useradd -r -g myuser myuser
 
 # Copy all the Python files for each app to the /app directory inside the container
 COPY apigateway.py apigateway.py
-COPY databaseAPI.py databaseAPI.py
+COPY database/databaseAPI.py databaseAPI.py
 COPY sendEmail/send_email.py send_email.py
 COPY getStretch/get_stretches.py get_stretches.py
 COPY dailyRec/dailyRec.py dailyRec.py
