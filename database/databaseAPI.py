@@ -18,7 +18,7 @@ class login(Resource):
     def get(self, username, password):
         if db.checkAccount(username, password):
             return {"User": f"{username} is now logged in"}
-        return {"Failed":f"Login Failed"}
+        return {"Failed": "Login Failed"}
 # use localhost/register/{username}/{password}
 # will return success if account created, else reutrn fail
 api.add_resource(register, "/register/<string:username>/<string:password>")
