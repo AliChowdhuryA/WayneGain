@@ -10,8 +10,8 @@ def register():
     username = data['username']
     password = data['password']
     # Perform validation and store user details in the database
-    url = f"http://localhost:5050/register/{username}/{password}"
-    return (requests.get(url)).text
+    url = f"http://localhost:5011/register/{username}/{password}"
+    return requests.get(url).text
 
     #return jsonify({'message': 'User registered successfully'})
 

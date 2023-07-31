@@ -12,7 +12,7 @@ def login():
         password = data['password']
         # Perform validation and authenticate user against stored credentials
 
-        url = f"http://localhost:5050/login/{username}/{password}"
+        url = f"http://localhost:5011/login/{username}/{password}"
         return (requests.get(url)).text
 
         #return jsonify({'message': 'User logged in successfully'})
