@@ -20,10 +20,12 @@ RUN groupadd -r myuser && useradd -r -g myuser myuser
 # Copy all the Python files for each app to the /app directory inside the container
 COPY apigateway.py apigateway.py
 COPY database/databaseAPI.py databaseAPI.py
+COPY database/database.py database.py
 COPY sendEmail/send_email.py send_email.py
 COPY getStretch/get_stretches.py get_stretches.py
 COPY dailyRec/dailyRec.py dailyRec.py
 COPY bmiCalc/bmi_c.py bmi_c.py
+COPY bmiCalc/bmiC.py bmiC.py
 COPY dailyCalories/daily_calories.py daily_calories.py
 COPY goals/personal_goals.py personal_goals.py
 COPY trackWorkout/workouts.py workouts.py
@@ -35,7 +37,7 @@ COPY register/register.py register.py
 COPY supervisord.conf /etc/supervisord.conf
 
 # Expose port 5000 for all apps
-EXPOSE 5000-5010
+EXPOSE 5000-5011
 
 # Start Supervisor to manage the processes
 CMD ["/usr/bin/supervisord"]

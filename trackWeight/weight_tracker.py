@@ -28,4 +28,4 @@ def track_workout():
         </form>'''
 
 if __name__ == '__main__':
-    app_weight_tracker.run(port=5005, debug=True)
+    app_weight_tracker.run(host='0.0.0.0', port=5005, debug=True)

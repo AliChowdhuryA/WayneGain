@@ -34,4 +34,4 @@ def track_workout():
         </form>'''
 
 if __name__ == '__main__':
-    app_track_workout.run(port=5004, debug=True)
+    app_track_workout.run(host='0.0.0.0', port=5004, debug=True)

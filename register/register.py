@@ -16,4 +16,4 @@ def register():
     #return jsonify({'message': 'User registered successfully'})
 
 if __name__ == '__main__':
-    app_register.run(port=5001, debug=True)
+    app_register.run(host='0.0.0.0', port=5001, debug=True)
