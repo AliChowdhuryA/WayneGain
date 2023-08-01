@@ -1,0 +1,408 @@
+# APIgateway
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apigateway
+  template:
+    metadata:
+      labels:
+        app: apigateway
+    spec:
+      containers:
+        - name: apigateway
+          image: apigateway:latest
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigateway-service
+spec:
+  selector:
+    app: apigateway
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP
+---
+# Register
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: register
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: register
+  template:
+    metadata:
+      labels:
+        app: register
+    spec:
+      containers:
+        - name: register
+          image: register:latest
+          ports:
+            - containerPort: 5001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: register-service
+spec:
+  selector:
+    app: register
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5001
+  type: ClusterIP
+---
+# Login
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login
+  template:
+    metadata:
+      labels:
+        app: login
+    spec:
+      containers:
+        - name: login
+          image: login:latest
+          ports:
+            - containerPort: 5002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: login-service
+spec:
+  selector:
+    app: login
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5002
+  type: ClusterIP
+---
+# SendEmail
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sendemail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sendemail
+  template:
+    metadata:
+      labels:
+        app: sendemail
+    spec:
+      containers:
+        - name: sendemail
+          image: sendemail:latest
+          ports:
+            - containerPort: 5003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sendemail-service
+spec:
+  selector:
+    app: sendemail
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5003
+  type: ClusterIP
+---
+# TrackWorkout
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trackworkout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trackworkout
+  template:
+    metadata:
+      labels:
+        app: trackworkout
+    spec:
+      containers:
+        - name: trackworkout
+          image: trackworkout:latest
+          ports:
+            - containerPort: 5004
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trackworkout-service
+spec:
+  selector:
+    app: trackworkout
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5004
+  type: ClusterIP
+---
+# TrackWeight
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trackweight
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trackweight
+  template:
+    metadata:
+      labels:
+        app: trackweight
+    spec:
+      containers:
+        - name: trackweight
+          image: trackweight:latest
+          ports:
+            - containerPort: 5005
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trackweight-service
+spec:
+  selector:
+    app: trackweight
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5005
+  type: ClusterIP
+---
+# Goals
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goals
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goals
+  template:
+    metadata:
+      labels:
+        app: goals
+    spec:
+      containers:
+        - name: goals
+          image: goals:latest
+          ports:
+            - containerPort: 5006
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goals-service
+spec:
+  selector:
+    app: goals
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5006
+  type: ClusterIP
+---
+# BMICalculator
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bmicalc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bmicalc
+  template:
+    metadata:
+      labels:
+        app: bmicalc
+    spec:
+      containers:
+        - name: bmicalc
+          image: bmicalc:latest
+          ports:
+            - containerPort: 5007
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bmicalc-service
+spec:
+  selector:
+    app: bmicalc
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5007
+  type: ClusterIP
+---
+# GetStretch
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: getstretch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: getstretch
+  template:
+    metadata:
+      labels:
+        app: getstretch
+    spec:
+      containers:
+        - name: getstretch
+          image: getstretch:latest
+          ports:
+            - containerPort: 5008
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: getstretch-service
+spec:
+  selector:
+    app: getstretch
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5008
+  type: ClusterIP
+---
+# DailyCalories
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dailycalories
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dailycalories
+  template:
+    metadata:
+      labels:
+        app: dailycalories
+    spec:
+      containers:
+        - name: dailycalories
+          image: dailycalories:latest
+          ports:
+            - containerPort: 5009
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dailycalories-service
+spec:
+  selector:
+    app: dailycalories
+  ports:
+    - protocol: TCP
+      port: 5009
+      targetPort: 5009
+  type: ClusterIP
+---
+# DailyRecipe
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dailyrec
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dailyrec
+  template:
+    metadata:
+      labels:
+        app: dailyrec
+    spec:
+      containers:
+        - name: dailyrec
+          image: dailyrec:latest
+          ports:
+            - containerPort: 5010
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dailyrec-service
+spec:
+  selector:
+    app: dailyrec
+  ports:
+    - protocol: TCP
+      port: 5010
+      targetPort: 5010
+  type: ClusterIP
+---
+# Database
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: database:latest
+          ports:
+            - containerPort: 5011
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-service
+spec:
+  selector:
+    app: database
+  ports:
+    - protocol: TCP
+      port: 5011
+      targetPort: 5011
+  type: ClusterIP
+---
