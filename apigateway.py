@@ -14,6 +14,7 @@ BMI_CALCULATOR_URL = "http://localhost:5007/api/bmi_calc"
 GET_STRETCHES_URL = "http://localhost:5008/api/get_stretches"
 DAILY_CALORIES_URL = "http://localhost:5009/api/daily_calories"
 DAILY_RECIPE_URL = "http://localhost:5010/api/daily_recipe"
+DATABASE_URL= "http://localhost:5011/api/database"
 
 
 @app.route('/api/login', methods=['POST'])
@@ -74,6 +75,28 @@ def calorie_input():
 def daily_recipe():
     response = requests.get(DAILY_RECIPE_URL)
     return jsonify(response.json()), response.status_code
+
+# EX: http://localhost:5000/api/database/login/?username=test&password=1234
+@app.route('/api/database/login/', methods=['GET'])
+def database_login():
+
+    username = request.args.get('username')
+    password = request.args.get('password')
+    
+    response = requests.get(f"{DATABASE_URL}/login/{username}/{password}")
+    
+    return jsonify(response.json()), response.status_code
+# EX: http://localhost:5000/api/database/register/?username=test&password=1234
+@app.route('/api/database/register/', methods=['GET'])
+def database_register():
+
+    username = request.args.get('username')
+    password = request.args.get('password')
+    
+    response = requests.get(f"{DATABASE_URL}/register/{username}/{password}")
+    
+    return jsonify(response.json()), response.status_code
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5000, debug=True)

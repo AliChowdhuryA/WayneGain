@@ -21,12 +21,12 @@ class login(Resource):
         return {"Failed": "Login Failed"}
 # use localhost/register/{username}/{password}
 # will return success if account created, else reutrn fail
-api.add_resource(register, "/register/<string:username>/<string:password>")
+api.add_resource(register, "/api/database/register/<string:username>/<string:password>")
 
 
 # use localhost/login/{username}/{password}
 # will return success if account is in database, else reutrn fail
-api.add_resource(login, "/login/<string:username>/<string:password>")
+api.add_resource(login, "/api/database/login/<string:username>/<string:password>")
 
 if __name__ == "__main__":
     db.createDatabase()
