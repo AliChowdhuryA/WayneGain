@@ -4,17 +4,17 @@ import requests
 app = Flask(__name__)
 
 # URLs of the other microservices
-REGISTER_API_URL = "http://localhost:5001/api/register"
-LOGIN_API_URL = "http://localhost:5002/api/login"
-SEND_EMAIL_API_URL = "http://localhost:5003/api/send_email"
-TRACK_WORKOUT_URL = "http://localhost:5004/api/track_workout"
-TRACK_WEIGHT_URL = "http://localhost:5005/api/track_weight"
-PERSONAL_GOALS_URL = "http://localhost:5006/api/random_goal"
-BMI_CALCULATOR_URL = "http://localhost:5007/api/bmi_calc"
-GET_STRETCHES_URL = "http://localhost:5008/api/get_stretches"
-DAILY_CALORIES_URL = "http://localhost:5009/api/daily_calories"
-DAILY_RECIPE_URL = "http://localhost:5010/api/daily_recipe"
-DATABASE_URL= "http://localhost:5011/api/database"
+REGISTER_API_URL = "http://host.docker.internal:5001/api/register"
+LOGIN_API_URL = "http://host.docker.internal:5002/api/login"
+SEND_EMAIL_API_URL = "http://host.docker.internal:5003/api/send_email"
+TRACK_WORKOUT_URL = "http://host.docker.internal:5004/api/track_workout"
+TRACK_WEIGHT_URL = "http://host.docker.internal:5005/api/track_weight"
+PERSONAL_GOALS_URL = "http://host.docker.internal:5006/api/random_goal"
+BMI_CALCULATOR_URL = "http://host.docker.internal:5007/api/bmi_calc"
+GET_STRETCHES_URL = "http://host.docker.internal:5008/api/get_stretches"
+DAILY_CALORIES_URL = "http://host.docker.internal:5009/api/daily_calories"
+DAILY_RECIPE_URL = "http://host.docker.internal:5010/api/daily_recipe"
+DATABASE_URL= "http://host.docker.internal:5011/api/database"
 
 
 @app.route('/api/login', methods=['POST'])

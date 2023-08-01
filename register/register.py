@@ -10,7 +10,7 @@ def register():
     username = data['username']
     password = data['password']
     # Perform validation and store user details in the database
-    url = f"http://localhost:5000/api/database/register/?username={username}&password={password}"
+    url = f"http://host.docker.internal:5000/api/database/register/?username={username}&password={password}"
     return requests.get(url).text
 
     #return jsonify({'message': 'User registered successfully'})
