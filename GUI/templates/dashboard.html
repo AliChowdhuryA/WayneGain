@@ -26,9 +26,26 @@
     <!-- Daily Calories Form -->
     <h2>Daily Calories</h2>
     <form method="post" action="/daily_calories">
-        <input type="text" name="calories" placeholder="Calories consumed today" required>
+        <input type="number" name="calories" placeholder="Calories consumed" required>
         <input type="submit" value="Submit Calories">
     </form>
+
+<!-- Email Form -->
+<h2>Send Email</h2>
+<form method="post" action="/send_email">
+    <label for="email_subject">Subject:</label>
+    <input type="text" name="subject" id="email_subject" placeholder="Email Subject" required>
+    <br>
+    <label for="email_recipients">Recipients:</label>
+    <input type="text" name="recipients" id="email_recipients" placeholder="Recipient Email(s) separated by commas" required>
+    <br>
+    <label for="email_body">Body:</label>
+    <textarea name="body" id="email_body" placeholder="Enter your email content here" required></textarea>
+    <br>
+
+    <input type="submit" value="Send Email">
+</form>
+
     <!-- Daily Goal -->
 <h2>Daily Goal</h2>
 <div id="goal-container">
