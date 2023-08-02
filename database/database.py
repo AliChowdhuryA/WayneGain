@@ -10,6 +10,20 @@ def createDatabase():
         password TEXT
     )""")
     connection.commit()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS daily_calories(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        calories TEXT,
+        date TEXT
+    )""")
+    connection.commit()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS track_weight(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        weight TEXT,
+        date TEXT
+    )""")
+    connection.commit()
     connection.close()
 
 # add a user to the database given username and password
@@ -61,3 +75,64 @@ def deleteAccount(username = ""):
     connection.commit()
     connection.close()
     return True
+
+def addDailyCalories(username = "", calories = "", date = ""):
+    connection = sqlite3.connect("login.db")
+    cursor =connection.cursor()
+    cursor.execute("INSERT INTO daily_calories (username, calories, date) VALUES (?, ?, ?)",(username, calories, date))
+    connection.commit()
+    connection.close()
+
+
+def searchDailyCalories(username):
+    connection = sqlite3.connect("login.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM daily_calories WHERE username=?", (username,))
+    records = cursor.fetchall()
+    connection.close()
+    
+    if not records:
+        return {"message": "No daily calories found for the specified username."}
+    
+    daily_calories_list = []
+    for record in records:
+        daily_calories_list.append({
+            "id": record[0],          # Corrected index position for id (auto-incrementing index)
+            "username": record[1],    # Corrected index position for username
+            "calories": record[2],    # Corrected index position for calories
+            "date": record[3]         # Corrected index position for date
+        })
+    
+    return {"daily_calories": daily_calories_list}
+
+
+
+def addTrackWeight(username = "", weight = "", date = ""):
+    connection = sqlite3.connect("login.db")
+    cursor =connection.cursor()
+    cursor.execute("INSERT INTO track_weight (username, weight, date) VALUES (?, ?, ?)",(username, weight, date))
+    connection.commit()
+    connection.close()
+
+
+
+def searchTrackWeight(username):
+    connection = sqlite3.connect("login.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM track_weight WHERE username=?", (username,))
+    records = cursor.fetchall()
+    connection.close()
+    
+    if not records:
+        return {"message": "No weight found for the specified username."}
+    
+    track_weight_list = []
+    for record in records:
+        track_weight_list.append({
+            "id": record[0],          # Corrected index position for id (auto-incrementing index)
+            "username": record[1],    # Corrected index position for username
+            "weight": record[2],    # Corrected index position for calories
+            "date": record[3]         # Corrected index position for date
+        })
+    
+    return {"track_weight": track_weight_list}

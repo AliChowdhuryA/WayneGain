@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weight Tracker</title>
+</head>
+<body>
+    <h1>Hello, {{ session['username'] }}!</h1>
+
+    <h2>Weight Added Today:</h2>
+    <p>{{ weight }} calories added today.</p>
+
+    <h2>Weight History:</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Weight</th>
+        </tr>
+        {% for entry in history_data['track_weight'][::-1] %}
+        <tr>
+            <td>{{ entry['date'] }}</td>
+            <td>{{ entry['weight'] }}lbs</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
+

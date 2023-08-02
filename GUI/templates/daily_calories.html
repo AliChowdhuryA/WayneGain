@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Calories Tracker</title>
+</head>
+<body>
+    <h1>Hello, {{ session['username'] }}!</h1>
+
+    <h2>Calories Added Today:</h2>
+    <p>{{ calories }} calories added today.</p>
+
+    <h2>Calories History:</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Calories</th>
+        </tr>
+        {% for entry in history_data['daily_calories'][::-1] %}
+        <tr>
+            <td>{{ entry['date'] }}</td>
+            <td>{{ entry['calories'] }}kcal</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
+
