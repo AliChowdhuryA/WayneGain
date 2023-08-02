@@ -28,20 +28,32 @@ class DailyCalories(Resource):
             return {"Error": "Invalid JSON data"}, 400
 
         username = data.get("username")
-        daily_calories = data.get("daily_calories")
+        calories = data.get("calories")
         date = data.get("date")
 
-        if not all([username, daily_calories, date]):
-            return {"Error": "Incomplete data. Please provide username, daily_calories, and date."}, 400
+        if not all([username, calories, date]):
+            return {"Error": "Incomplete data. Please provide username, calories, and date."}, 400
 
-        db.addDailyCalories(username, daily_calories, date)
+        db.addDailyCalories(username, calories, date)
 
         return {
             "username": username,
-            "daily_calories": daily_calories,
+            "calories": calories,
             "date": date
         }
 
+class PrintDailyCalories(Resource):
+    def post(self):
+        data = request.get_json()
+        if not data:
+            return {"Error": "Invalid JSON data"}, 400
+
+        username = data.get("username")
+
+        if not all([username]):
+            return {"Error": "Incomplete data. Please provide username."}, 400
+        
+        return db.searchDailyCalories(username)
 
 
 # use localhost/api/register/{username}/{password}
@@ -55,6 +67,9 @@ api.add_resource(login, "/api/database/login/<string:username>/<string:password>
 
 
 api.add_resource(DailyCalories, "/api/database/daily_calories")
+
+
+api.add_resource(PrintDailyCalories, "/api/database/print_daily_calories")
 
 if __name__ == "__main__":
     db.createDatabase()

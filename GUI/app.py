@@ -84,19 +84,44 @@ def track_workout():
         print(f"Workout tracked for user {session['username']}: {workout} at {time} on {date}")
     return redirect(url_for('dashboard'))
 
-@app.route('/daily_calories', methods=['POST'])
+# @app.route('/daily_calories', methods=['GET', 'POST'])
+# def daily_calories():
+#     if request.method == 'POST' and 'username' in session:
+#         calories = request.form['calories']
+#         if calories.isdigit():
+#             url = "http://host.docker.internal:5000/api/daily_calories"
+#             return_url = requests.post(url, json={"user": session["username"], "caloric_intake": calories})
+#             json_url = json.loads(return_url.text)
+#             print(json_url)
+#             database_url = "http://host.docker.internal:5000/api/database/daily_calories"
+#             return_url = requests.post(database_url, json=json_url)
+#             json_url = json.loads(return_url.text)
+#             print(json_url)
+#             print(f"Daily calories tracked for user {session['username']}: {calories}")
+#             return render_template('daily_calories.html')
+#         print("failed")
+#     return redirect(url_for('dashboard'))
+
+@app.route('/daily_calories', methods=['GET', 'POST'])
 def daily_calories():
-    if 'username' in session:
+    if request.method == 'POST' and 'username' in session:
         calories = request.form['calories']
         if calories.isdigit():
             url = "http://host.docker.internal:5000/api/daily_calories"
             return_url = requests.post(url, json={"user": session["username"], "caloric_intake": calories})
             json_url = json.loads(return_url.text)
+            print(json_url)
+            database_url = "http://host.docker.internal:5000/api/database/daily_calories"
+            return_url = requests.post(database_url, json=json_url)
+            json_url = json.loads(return_url.text)
+            print(json_url)
+            database_url = "http://host.docker.internal:5000/api/database/print_daily_calories"
+            history_url = requests.post(database_url, json={"username": session["username"]})
+            history_data = json.loads(history_url.text)
+
             print(f"Daily calories tracked for user {session['username']}: {calories}")
-
-
+            return render_template('daily_calories.html', calories=calories, history_data=history_data)
         print("failed")
     return redirect(url_for('dashboard'))
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5020)

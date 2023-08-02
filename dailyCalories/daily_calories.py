@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, request, jsonify
-from datetime import date
+from datetime import datetime
 app = Flask(__name__)
 
 # tested on postman using localhost:5000/calorie_input
@@ -12,10 +12,10 @@ def daily_calories():
         data = request.get_json()
         if(data is None):
             return {"Error":"No data has been passed"}
-        today = date.today()
+        today = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
         user = data['user']
         caloric_intake = data['caloric_intake']
-        return jsonify({"user": user, "date" : today, "calories" : caloric_intake})
+        return jsonify({"username": user, "date" : today, "calories" : caloric_intake})
     #return "Error"
 
 if __name__ == '__main__':
