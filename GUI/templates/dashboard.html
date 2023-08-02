@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <p>This is your dashboard.</p>
+    
+    <!-- Track Weight Form -->
+    <h2>Track Weight</h2>
+    <form method="post" action="/track_weight">
+        <input type="number" name="weight" placeholder="Weight (in lb)" required>
+        <input type="submit" value="Submit Weight">
+    </form>
+    
+    <!-- Track Workout Form -->
+    <h2>Track Workout</h2>
+    <form method="post" action="/track_workout">
+        <input type="text" name="workout" placeholder="Workout description" required>
+        <input type="time" name="time" required>
+        <input type="date" name="date" required>
+        <input type="submit" value="Submit Workout">
+    </form>
+    
+    <!-- Daily Calories Form -->
+    <h2>Daily Calories</h2>
+    <form method="post" action="/daily_calories">
+        <input type="text" name="calories" placeholder="Calories consumed today" required>
+        <input type="submit" value="Submit Calories">
+    </form>
+    
+    <a href="/logout">Logout</a>
+</body>
+</html>

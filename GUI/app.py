@@ -1,0 +1,102 @@
+from flask import Flask, render_template, request, redirect, url_for, session, g
+import requests, json
+
+app = Flask(__name__)
+
+app.secret_key = 'your_secret_key'  # Change this to a strong secret key
+
+@app.route('/')
+def index():
+    if 'username' in session:
+        return redirect(url_for('dashboard'))
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        url = "http://host.docker.internal:5000/api/login"
+
+        return_url = requests.post(url, json={"username": username, "password": password})
+        json_url = json.loads(return_url.text)
+
+        if "Failed" in json_url.keys():
+            error = "Invalid username or password. Please try again."
+            return render_template('login.html', error=error)
+
+        if "User" in json_url.keys():
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        url = "http://host.docker.internal:5000/api/register"
+        return_url = requests.post(url, json={"username": username, "password": password})
+        json_url = json.loads(return_url.text)
+
+        if "Failed" in json_url.keys():
+            error = "Username Taken. Please try again."
+            return render_template('register.html', error=error)
+
+        session['username'] = username
+        return redirect(url_for('dashboard'))
+    return render_template('register.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
+@app.route('/dashboard')
+def dashboard():
+    if 'username' in session:
+        return render_template('dashboard.html', username=session['username'])
+    return redirect(url_for('login'))
+
+
+@app.route('/track_weight', methods=['POST'])
+def track_weight():
+    if 'username' in session:
+        weight = request.form['weight']
+
+
+
+
+        print(f"Weight tracked for user {session['username']}: {weight} kg")
+    return redirect(url_for('dashboard'))
+
+@app.route('/track_workout', methods=['POST'])
+def track_workout():
+    if 'username' in session:
+        workout = request.form['workout']
+        time = request.form['time']
+        date = request.form['date']
+
+
+
+        print(f"Workout tracked for user {session['username']}: {workout} at {time} on {date}")
+    return redirect(url_for('dashboard'))
+
+@app.route('/daily_calories', methods=['POST'])
+def daily_calories():
+    if 'username' in session:
+        calories = request.form['calories']
+        if calories.isdigit():
+            url = "http://host.docker.internal:5000/api/daily_calories"
+            return_url = requests.post(url, json={"user": session["username"], "caloric_intake": calories})
+            json_url = json.loads(return_url.text)
+            print(f"Daily calories tracked for user {session['username']}: {calories}")
+
+
+        print("failed")
+    return redirect(url_for('dashboard'))
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True, port=5020)
