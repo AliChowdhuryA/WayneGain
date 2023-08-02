@@ -6,6 +6,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 5015
 
 CMD ["python", "apigateway.py"]

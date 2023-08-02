@@ -18,7 +18,7 @@ os.system("docker build --tag track_weight ./trackWeight/")
 os.system("docker build --tag track_workout ./trackWorkout/")
 os.system("docker build --tag gui ./GUI/")
 
-os.system("docker run -d -p 5000:5000/tcp --name apigateway apigateway")
+os.system("docker run -d -p 5015:5015/tcp --name apigateway apigateway")
 os.system("docker run -d -p 5001:5001/tcp --name register register")
 os.system("docker run -d -p 5002:5002/tcp --name login login")
 os.system("docker run -d -p 5003:5003/tcp --name email send_email")
