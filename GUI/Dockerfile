@@ -5,7 +5,5 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . .
-
-EXPOSE 5015
-
-CMD ["python", "apigateway.py"]
+EXPOSE 5020
+CMD ["python", "app.py"]
