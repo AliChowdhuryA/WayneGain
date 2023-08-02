@@ -121,5 +121,17 @@ def database_print_track_weight():
     response = requests.post(f"{DATABASE_URL}/print_track_weight", json=data)
     return jsonify(response.json())
 
+@app.route('/api/database/track_workout', methods=['POST'])
+def database_track_workout():
+    data = request.get_json()
+    response = requests.post(f"{DATABASE_URL}/track_workout", json=data)
+    return jsonify(response.json())
+
+@app.route('/api/database/print_track_workout', methods=['POST'])
+def database_print_track_workout():
+    data = request.get_json()
+    response = requests.post(f"{DATABASE_URL}/print_track_workout", json=data)
+    return jsonify(response.json())
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5015, debug=True)

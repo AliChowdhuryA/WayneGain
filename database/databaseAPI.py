@@ -88,6 +88,39 @@ class PrintTrackWeight(Resource):
             return {"Error": "Incomplete data. Please provide username."}, 400
         return db.searchTrackWeight(username)
     
+class TrackWorkout(Resource):
+    def post(self):
+        data = request.get_json()
+        if not data:
+            return {"Error": "Invalid JSON data"}, 400
+
+        username = data.get("username")
+        workout = data.get("workout")
+        date = data.get("date")
+
+        if not all([username, workout, date]):
+            return {"Error": "Incomplete data. Please provide username, workout, and date."}, 400
+
+        db.addTrackWorkout(username, workout, date)
+
+        return {
+            "username": username,
+            "weight": workout,
+            "date": date
+        }
+
+class PrintTrackWorkout(Resource):
+    def post(self):
+        data = request.get_json()
+        if not data:
+            return {"Error": "Invalid JSON data"}, 400
+
+        username = data.get("username")
+
+        if not all([username]):
+            return {"Error": "Incomplete data. Please provide username."}, 400
+        return db.searchTrackWorkout(username)
+    
 # use localhost/api/register/{username}/{password}
 # will return success if account created, else reutrn fail
 api.add_resource(register, "/api/database/register/<string:username>/<string:password>")
@@ -104,6 +137,9 @@ api.add_resource(TrackWeight, "/api/database/track_weight")
 
 api.add_resource(PrintTrackWeight, "/api/database/print_track_weight")
 
+api.add_resource(TrackWorkout, "/api/database/track_workout")
+
+api.add_resource(PrintTrackWorkout, "/api/database/print_track_workout")
 if __name__ == "__main__":
     db.createDatabase()
     app.run(host='0.0.0.0', port=5011, debug=True)

@@ -60,18 +60,6 @@ def dashboard():
         return render_template('dashboard.html', username=session['username'])
     return redirect(url_for('login'))
 
-@app.route('/track_workout', methods=['POST'])
-def track_workout():
-    if 'username' in session:
-        workout = request.form['workout']
-        time = request.form['time']
-        date = request.form['date']
-
-
-
-        print(f"Workout tracked for user {session['username']}: {workout} at {time} on {date}")
-    return redirect(url_for('dashboard'))
-
 @app.route('/daily_calories', methods=['GET', 'POST'])
 def daily_calories():
     if request.method == 'POST' and 'username' in session:
@@ -115,6 +103,34 @@ def track_weight():
 
             print(f"Weight tracked for user {session['username']}: {weight}")
             return render_template('track_weight.html', weight=weight, history_data=history_data)
+        print("failed")
+    return redirect(url_for('dashboard'))
+
+@app.route('/track_workout', methods=['GET', 'POST'])
+def track_workout():
+    if request.method == 'POST' and 'username' in session:
+        workout = request.form['workout']
+        time = request.form['time']
+        date = request.form['date']
+        if workout != None and time != None and date != None:
+            url = "http://host.docker.internal:5015/api/track_workout"
+            return_url = requests.post(url, json={"username": session["username"], "workout": workout, "time":time, "date":date})
+            json_url = json.loads(return_url.text)
+            json_url["date"] = json_url["date"]+ " "+ json_url["time"]
+            json_url.pop("time")
+            print(json_url)
+            database_url = "http://host.docker.internal:5015/api/database/track_workout"
+            return_url = requests.post(database_url, json=json_url)
+            json_url = json.loads(return_url.text)
+            print(json_url)
+            database_url = "http://host.docker.internal:5015/api/database/print_track_workout"
+            history_url = requests.post(database_url, json={"username": session["username"]})
+            history_data = json.loads(history_url.text)
+            print(json_url)
+
+            print(f"Workout tracked for user {session['username']}: {workout} at {time} on {date}")
+            return render_template('track_workout.html', workout=workout, history_data=history_data)
+
         print("failed")
     return redirect(url_for('dashboard'))
 

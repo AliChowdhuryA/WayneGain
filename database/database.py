@@ -24,6 +24,13 @@ def createDatabase():
         date TEXT
     )""")
     connection.commit()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS track_workout(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        workout TEXT,
+        date TEXT
+    )""")
+    connection.commit()
     connection.close()
 
 # add a user to the database given username and password
@@ -136,3 +143,34 @@ def searchTrackWeight(username):
         })
     
     return {"track_weight": track_weight_list}
+
+
+def addTrackWorkout(username = "", workout = "", date = ""):
+    connection = sqlite3.connect("login.db")
+    cursor =connection.cursor()
+    cursor.execute("INSERT INTO track_workout (username, workout, date) VALUES (?, ?, ?)",(username, workout, date))
+    connection.commit()
+    connection.close()
+
+
+
+def searchTrackWorkout(username):
+    connection = sqlite3.connect("login.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM track_workout WHERE username=?", (username,))
+    records = cursor.fetchall()
+    connection.close()
+    
+    if not records:
+        return {"message": "No workout found for the specified username."}
+    
+    track_workout_list = []
+    for record in records:
+        track_workout_list.append({
+            "id": record[0],          # Corrected index position for id (auto-incrementing index)
+            "username": record[1],    # Corrected index position for username
+            "workout": record[2],    # Corrected index position for calories
+            "date": record[3]         # Corrected index position for date
+        })
+    
+    return {"track_workout": track_workout_list}
