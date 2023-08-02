@@ -26,7 +26,10 @@ def send_email():
         recipients=email_data["recipients"],
         body=email_data["body"]
     )
-    mail.send(msg)
+    try:
+        mail.send(msg)
+    except:
+        return {"failed_send": "Error"}
 
     return {"email_success":"Email sent successfully"}
 

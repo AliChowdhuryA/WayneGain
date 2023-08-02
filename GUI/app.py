@@ -160,6 +160,23 @@ def get_goal():
 
     return {"goal": random_goal}
 
+@app.route('/send_email', methods=['POST'])
+def send_email():
+    if request.method == 'POST' and 'username' in session:
+        subject = request.form['subject']
+        recipients = request.form['recipients']
+        body = request.form['body']
+        url = "http://host.docker.internal:5015/api/send_email"
+        return_url = requests.post(url, json={"subject":subject, "recipients": [f'{recipients}'], "body":body})
+        print(return_url)
+        json_url = json.loads(return_url.text)
+        if 'email_success' in json_url.keys():
+           output = "Email sent"
+        else:
+           output = "Failed Sending email"
+        return render_template('send_email.html', output = output)
+
+
 
 if __name__ == '__main__':
     ifGenerate()
