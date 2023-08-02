@@ -11,12 +11,11 @@ def login():
         username = data['username']
         password = data['password']
         # Perform validation and authenticate user against stored credentials
-
-        url = f"http://localhost:5050/login/{username}/{password}"
+        url = f"http://host.docker.internal:5000/api/database/login/?username={username}&password={password}"
         return (requests.get(url)).text
 
         #return jsonify({'message': 'User logged in successfully'})
     return {"Error": "No Post"}
 
 if __name__ == '__main__':
-    app.run(port=5002, debug=True)
+    app.run(host='0.0.0.0', port=5002, debug=True)

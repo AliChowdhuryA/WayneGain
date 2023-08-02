@@ -10,10 +10,10 @@ def register():
     username = data['username']
     password = data['password']
     # Perform validation and store user details in the database
-    url = f"http://localhost:5050/register/{username}/{password}"
-    return (requests.get(url)).text
+    url = f"http://host.docker.internal:5000/api/database/register/?username={username}&password={password}"
+    return requests.get(url).text
 
     #return jsonify({'message': 'User registered successfully'})
 
 if __name__ == '__main__':
-    app_register.run(port=5001, debug=True)
+    app_register.run(host='0.0.0.0', port=5001, debug=True)
