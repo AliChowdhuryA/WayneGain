@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: apigateway
-          image: apigateway:latest
+          image: docker.io/andyhcode/apigateway:latest
           ports:
             - containerPort: 5000
 ---
@@ -30,7 +30,7 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # Register
 apiVersion: apps/v1
@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
         - name: register
-          image: register:latest
+          image: docker.io/andyhcode/register:latest
           ports:
             - containerPort: 5001
 ---
@@ -62,9 +62,9 @@ spec:
     app: register
   ports:
     - protocol: TCP
-      port: 80
+      port: 5001
       targetPort: 5001
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # Login
 apiVersion: apps/v1
@@ -83,7 +83,7 @@ spec:
     spec:
       containers:
         - name: login
-          image: login:latest
+          image: docker.io/andyhcode/login:latest
           ports:
             - containerPort: 5002
 ---
@@ -96,9 +96,9 @@ spec:
     app: login
   ports:
     - protocol: TCP
-      port: 80
+      port: 5002
       targetPort: 5002
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # SendEmail
 apiVersion: apps/v1
@@ -117,7 +117,7 @@ spec:
     spec:
       containers:
         - name: sendemail
-          image: sendemail:latest
+          image: docker.io/andyhcode/send_email:latest
           ports:
             - containerPort: 5003
 ---
@@ -130,9 +130,9 @@ spec:
     app: sendemail
   ports:
     - protocol: TCP
-      port: 80
+      port: 5003
       targetPort: 5003
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # TrackWorkout
 apiVersion: apps/v1
@@ -151,7 +151,7 @@ spec:
     spec:
       containers:
         - name: trackworkout
-          image: trackworkout:latest
+          image: docker.io/andyhcode/track_workout:latest
           ports:
             - containerPort: 5004
 ---
@@ -164,9 +164,9 @@ spec:
     app: trackworkout
   ports:
     - protocol: TCP
-      port: 80
+      port: 5004
       targetPort: 5004
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # TrackWeight
 apiVersion: apps/v1
@@ -185,7 +185,7 @@ spec:
     spec:
       containers:
         - name: trackweight
-          image: trackweight:latest
+          image: docker.io/andyhcode/track_weight:latest
           ports:
             - containerPort: 5005
 ---
@@ -198,9 +198,9 @@ spec:
     app: trackweight
   ports:
     - protocol: TCP
-      port: 80
+      port: 5005
       targetPort: 5005
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # Goals
 apiVersion: apps/v1
@@ -219,7 +219,7 @@ spec:
     spec:
       containers:
         - name: goals
-          image: goals:latest
+          image: docker.io/andyhcode/goals:latest
           ports:
             - containerPort: 5006
 ---
@@ -232,9 +232,9 @@ spec:
     app: goals
   ports:
     - protocol: TCP
-      port: 80
+      port: 5006
       targetPort: 5006
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # BMICalculator
 apiVersion: apps/v1
@@ -253,7 +253,7 @@ spec:
     spec:
       containers:
         - name: bmicalc
-          image: bmicalc:latest
+          image: docker.io/andyhcode/bmi_cal:latest
           ports:
             - containerPort: 5007
 ---
@@ -266,9 +266,9 @@ spec:
     app: bmicalc
   ports:
     - protocol: TCP
-      port: 80
+      port: 5007
       targetPort: 5007
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # GetStretch
 apiVersion: apps/v1
@@ -287,7 +287,7 @@ spec:
     spec:
       containers:
         - name: getstretch
-          image: getstretch:latest
+          image: docker.io/andyhcode/get_stretch:latest
           ports:
             - containerPort: 5008
 ---
@@ -300,9 +300,9 @@ spec:
     app: getstretch
   ports:
     - protocol: TCP
-      port: 5000
+      port: 5008
       targetPort: 5008
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # DailyCalories
 apiVersion: apps/v1
@@ -321,7 +321,7 @@ spec:
     spec:
       containers:
         - name: dailycalories
-          image: dailycalories:latest
+          image: docker.io/andyhcode/daily_calories:latest
           ports:
             - containerPort: 5009
 ---
@@ -336,7 +336,7 @@ spec:
     - protocol: TCP
       port: 5009
       targetPort: 5009
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # DailyRecipe
 apiVersion: apps/v1
@@ -355,7 +355,7 @@ spec:
     spec:
       containers:
         - name: dailyrec
-          image: dailyrec:latest
+          image: docker.io/andyhcode/daily_rec:latest
           ports:
             - containerPort: 5010
 ---
@@ -370,7 +370,7 @@ spec:
     - protocol: TCP
       port: 5010
       targetPort: 5010
-  type: ClusterIP
+  type: LoadBalancer
 ---
 # Database
 apiVersion: apps/v1
@@ -389,7 +389,7 @@ spec:
     spec:
       containers:
         - name: database
-          image: database:latest
+          image: docker.io/andyhcode/database:latest
           ports:
             - containerPort: 5011
 ---
@@ -404,5 +404,39 @@ spec:
     - protocol: TCP
       port: 5011
       targetPort: 5011
-  type: ClusterIP
+  type: LoadBalancer
+---
+# GUI
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gui
+  template:
+    metadata:
+      labels:
+        app: gui
+    spec:
+      containers:
+        - name: gui
+          image: docker.io/andyhcode/gui:latest
+          ports:
+            - containerPort: 5020
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gui-service
+spec:
+  selector:
+    app: gui
+  ports:
+    - protocol: TCP
+      port: 5020
+      targetPort: 5020
+  type: LoadBalancer
 ---
