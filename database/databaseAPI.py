@@ -55,21 +55,54 @@ class PrintDailyCalories(Resource):
         
         return db.searchDailyCalories(username)
 
+class TrackWeight(Resource):
+    def post(self):
+        data = request.get_json()
+        if not data:
+            return {"Error": "Invalid JSON data"}, 400
 
+        username = data.get("username")
+        weight = data.get("weight")
+        date = data.get("date")
+
+        if not all([username, weight, date]):
+            return {"Error": "Incomplete data. Please provide username, weight, and date."}, 400
+
+        db.addTrackWeight(username, weight, date)
+
+        return {
+            "username": username,
+            "weight": weight,
+            "date": date
+        }
+
+class PrintTrackWeight(Resource):
+    def post(self):
+        data = request.get_json()
+        if not data:
+            return {"Error": "Invalid JSON data"}, 400
+
+        username = data.get("username")
+
+        if not all([username]):
+            return {"Error": "Incomplete data. Please provide username."}, 400
+        return db.searchTrackWeight(username)
+    
 # use localhost/api/register/{username}/{password}
 # will return success if account created, else reutrn fail
 api.add_resource(register, "/api/database/register/<string:username>/<string:password>")
-
 
 # use localhost/api/login/{username}/{password}
 # will return success if account is in database, else reutrn fail
 api.add_resource(login, "/api/database/login/<string:username>/<string:password>")
 
-
 api.add_resource(DailyCalories, "/api/database/daily_calories")
 
-
 api.add_resource(PrintDailyCalories, "/api/database/print_daily_calories")
+
+api.add_resource(TrackWeight, "/api/database/track_weight")
+
+api.add_resource(PrintTrackWeight, "/api/database/print_track_weight")
 
 if __name__ == "__main__":
     db.createDatabase()

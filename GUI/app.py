@@ -61,16 +61,16 @@ def dashboard():
     return redirect(url_for('login'))
 
 
-@app.route('/track_weight', methods=['POST'])
-def track_weight():
-    if 'username' in session:
-        weight = request.form['weight']
+# @app.route('/track_weight', methods=['POST'])
+# def track_weight():
+#     if 'username' in session:
+#         weight = request.form['weight']
 
 
 
 
-        print(f"Weight tracked for user {session['username']}: {weight} kg")
-    return redirect(url_for('dashboard'))
+#         print(f"Weight tracked for user {session['username']}: {weight} kg")
+#     return redirect(url_for('dashboard'))
 
 @app.route('/track_workout', methods=['POST'])
 def track_workout():
@@ -118,10 +118,35 @@ def daily_calories():
             database_url = "http://host.docker.internal:5000/api/database/print_daily_calories"
             history_url = requests.post(database_url, json={"username": session["username"]})
             history_data = json.loads(history_url.text)
+            print(json_url)
 
             print(f"Daily calories tracked for user {session['username']}: {calories}")
             return render_template('daily_calories.html', calories=calories, history_data=history_data)
         print("failed")
     return redirect(url_for('dashboard'))
+
+@app.route('/track_weight', methods=['GET', 'POST'])
+def track_weight():
+    if request.method == 'POST' and 'username' in session:
+        weight = request.form['weight']
+        if weight.isdigit():
+            url = "http://host.docker.internal:5000/api/track_weight"
+            return_url = requests.post(url, json={"username": session["username"], "weight": weight})
+            json_url = json.loads(return_url.text)
+            print(json_url)
+            database_url = "http://host.docker.internal:5000/api/database/track_weight"
+            return_url = requests.post(database_url, json=json_url)
+            json_url = json.loads(return_url.text)
+            print(json_url)
+            database_url = "http://host.docker.internal:5000/api/database/print_track_weight"
+            history_url = requests.post(database_url, json={"username": session["username"]})
+            history_data = json.loads(history_url.text)
+            print(json_url)
+
+            print(f"Weight tracked for user {session['username']}: {weight}")
+            return render_template('track_weight.html', weight=weight, history_data=history_data)
+        print("failed")
+    return redirect(url_for('dashboard'))
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5020)

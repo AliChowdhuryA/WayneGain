@@ -15,10 +15,10 @@
             <th>Date</th>
             <th>Calories</th>
         </tr>
-        {% for entry in history_data['daily_calories'][::-1] %} {# Using [::-1] to reverse the list #}
+        {% for entry in history_data['daily_calories'][::-1] %}
         <tr>
             <td>{{ entry['date'] }}</td>
-            <td>{{ entry['calories'] }}</td>
+            <td>{{ entry['calories'] }}kcal</td>
         </tr>
         {% endfor %}
     </table>
