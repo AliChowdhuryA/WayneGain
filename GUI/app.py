@@ -1,9 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for, session, g
 import requests, json
+from datetime import datetime
 
 app = Flask(__name__)
 
 app.secret_key = 'your_secret_key'  # Change this to a strong secret key
+date = None
+random_goal = None
+
+def ifGenerate():
+    global date
+    global random_goal
+    now = datetime.now().strftime("%d/%m/%Y")
+    if date == None or now != date or random_goal == None:
+        date = now
+        return True
+    return False
+
+
+
 
 @app.route('/')
 def index():
@@ -134,5 +149,18 @@ def track_workout():
         print("failed")
     return redirect(url_for('dashboard'))
 
+@app.route('/get_goal')
+def get_goal():
+    global random_goal
+    if ifGenerate():
+        url = "http://host.docker.internal:5015/api/random_goal"
+        return_url = requests.get(url)
+        json_url = json.loads(return_url.text)
+        random_goal = json_url["goal"]
+
+    return {"goal": random_goal}
+
+
 if __name__ == '__main__':
+    ifGenerate()
     app.run(host='0.0.0.0', debug=True, port=5020)
