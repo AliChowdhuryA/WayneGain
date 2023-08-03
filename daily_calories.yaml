@@ -1,0 +1,40 @@
+# daily_calories-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: daily_calories-deployment
+spec:
+  replicas: 3  # You can adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: daily_calories
+  template:
+    metadata:
+      labels:
+        app: daily_calories
+    spec:
+      containers:
+      - name: daily_calories-container
+        image: adeel48180/dailycal:latest  # Replace with your Docker image URL
+        ports:
+        - containerPort: 5009
+        env:
+        - name: FLASK_ENV
+          value: production
+        # Add any other environment variables needed by your Flask app
+
+---
+# Service to expose the Flask app within the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: daily_calories-service
+spec:
+  selector:
+    app: daily_calories
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5009
+  type: LoadBalancer  # Use LoadBalancer for cloud deployments, or NodePort for on-premises deployments
