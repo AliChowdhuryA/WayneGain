@@ -1,0 +1,39 @@
+# Deployment for apigateway microservice
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway-deployment
+  labels:
+    app: apigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apigateway
+  template:
+    metadata:
+      labels:
+        app: apigateway
+    spec:
+      containers:
+        - name: apigateway
+          image: ghcr.io/Alichowdhurya/waynegainlogin17:latest # Replace with Docker image repository and tag of each microservice
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_ENV
+              value: "production" # Set "production" env or "development environment"
+---
+# Service for apigateway microservice
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigateway-service
+spec:
+  selector:
+    app: apigateway
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
