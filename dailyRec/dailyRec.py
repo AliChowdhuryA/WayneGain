@@ -21,13 +21,31 @@ recipes = [
     },
     {
         "name": "Sage Rubbed Salmon",
-        "ingredients": ["Fresh Sage", "Garlic Powder", "Kosher Salt", "ground pepper", "salmon fillet","olive oil"],
+        "ingredients": ["Fresh Sage", "Garlic Powder",  "Kosher Salt", "ground pepper", "salmon fillet","olive oil"],
         "instructions": "Preheat oven to 375°. Mix first 4 ingredients rub onto flesh side of salmon. Cut into 6 portions. In a large cast-iron skillet, heat oil over medium heat. Add salmon, skin side down cook 5 minutes. Transfer skillet to oven bake just until fish flakes easily with a fork, about 10 minutes.",
         "ptime": 10,
         "ctime": 10,
     }
+     ,
+    {
+        "name": "Macoroni Noodles",
+        "ingredients": ["Macoroni", "Cheese", "Butter", "Milk"],
+        "instructions": "Boil Macaroni when boiled add milk, butter, cheese and stir",
+        "ptime": 15,
+        "ctime": 20,
+    }
+    ,
+    {
+        "name": "Grilled Cheese",
+        "ingredients": ["Bread", "Cheese", "Butter", "Mayo"],
+        "instructions": "Apply Butter and Mayo to bread and add chees and then grill it  ",
+        "ptime": 5,
+        "ctime": 10,
+    }
+
+
 ]
-@app.route('/api/daily_recipe', methods=['GET'])
+@app.route('/dr', methods=['GET'])
 def getRandomRecipe():
     random_recipe = random.choice(recipes)
 
@@ -35,5 +53,6 @@ def getRandomRecipe():
      
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5010,debug=True)
+    app.run(host='0.0.0.0',
+             port=8000,debug=True)
 
