@@ -45,7 +45,7 @@ recipes = [
 
 
 ]
-@app.route('/dr', methods=['GET'])
+@app.route('/api/daily_recipe', methods=['GET'])
 def getRandomRecipe():
     random_recipe = random.choice(recipes)
 
@@ -53,6 +53,5 @@ def getRandomRecipe():
      
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',
-             port=8000,debug=True)
+    app.run(host='0.0.0.0', port=5010,debug=True)
 
