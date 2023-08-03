@@ -1,0 +1,442 @@
+# APIgateway
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apigateway
+  template:
+    metadata:
+      labels:
+        app: apigateway
+    spec:
+      containers:
+        - name: apigateway
+          image: docker.io/andyhcode/apigateway:latest
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigateway-service
+spec:
+  selector:
+    app: apigateway
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
+---
+# Register
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: register
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: register
+  template:
+    metadata:
+      labels:
+        app: register
+    spec:
+      containers:
+        - name: register
+          image: docker.io/andyhcode/register:latest
+          ports:
+            - containerPort: 5001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: register-service
+spec:
+  selector:
+    app: register
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  type: LoadBalancer
+---
+# Login
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login
+  template:
+    metadata:
+      labels:
+        app: login
+    spec:
+      containers:
+        - name: login
+          image: docker.io/andyhcode/login:latest
+          ports:
+            - containerPort: 5002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: login-service
+spec:
+  selector:
+    app: login
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002
+  type: LoadBalancer
+---
+# SendEmail
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sendemail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sendemail
+  template:
+    metadata:
+      labels:
+        app: sendemail
+    spec:
+      containers:
+        - name: sendemail
+          image: docker.io/andyhcode/send_email:latest
+          ports:
+            - containerPort: 5003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sendemail-service
+spec:
+  selector:
+    app: sendemail
+  ports:
+    - protocol: TCP
+      port: 5003
+      targetPort: 5003
+  type: LoadBalancer
+---
+# TrackWorkout
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trackworkout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trackworkout
+  template:
+    metadata:
+      labels:
+        app: trackworkout
+    spec:
+      containers:
+        - name: trackworkout
+          image: docker.io/andyhcode/track_workout:latest
+          ports:
+            - containerPort: 5004
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trackworkout-service
+spec:
+  selector:
+    app: trackworkout
+  ports:
+    - protocol: TCP
+      port: 5004
+      targetPort: 5004
+  type: LoadBalancer
+---
+# TrackWeight
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trackweight
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trackweight
+  template:
+    metadata:
+      labels:
+        app: trackweight
+    spec:
+      containers:
+        - name: trackweight
+          image: docker.io/andyhcode/track_weight:latest
+          ports:
+            - containerPort: 5005
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trackweight-service
+spec:
+  selector:
+    app: trackweight
+  ports:
+    - protocol: TCP
+      port: 5005
+      targetPort: 5005
+  type: LoadBalancer
+---
+# Goals
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goals
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goals
+  template:
+    metadata:
+      labels:
+        app: goals
+    spec:
+      containers:
+        - name: goals
+          image: docker.io/andyhcode/goals:latest
+          ports:
+            - containerPort: 5006
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goals-service
+spec:
+  selector:
+    app: goals
+  ports:
+    - protocol: TCP
+      port: 5006
+      targetPort: 5006
+  type: LoadBalancer
+---
+# BMICalculator
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bmicalc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bmicalc
+  template:
+    metadata:
+      labels:
+        app: bmicalc
+    spec:
+      containers:
+        - name: bmicalc
+          image: docker.io/andyhcode/bmi_cal:latest
+          ports:
+            - containerPort: 5007
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bmicalc-service
+spec:
+  selector:
+    app: bmicalc
+  ports:
+    - protocol: TCP
+      port: 5007
+      targetPort: 5007
+  type: LoadBalancer
+---
+# GetStretch
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: getstretch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: getstretch
+  template:
+    metadata:
+      labels:
+        app: getstretch
+    spec:
+      containers:
+        - name: getstretch
+          image: docker.io/andyhcode/get_stretch:latest
+          ports:
+            - containerPort: 5008
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: getstretch-service
+spec:
+  selector:
+    app: getstretch
+  ports:
+    - protocol: TCP
+      port: 5008
+      targetPort: 5008
+  type: LoadBalancer
+---
+# DailyCalories
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dailycalories
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dailycalories
+  template:
+    metadata:
+      labels:
+        app: dailycalories
+    spec:
+      containers:
+        - name: dailycalories
+          image: docker.io/andyhcode/daily_calories:latest
+          ports:
+            - containerPort: 5009
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dailycalories-service
+spec:
+  selector:
+    app: dailycalories
+  ports:
+    - protocol: TCP
+      port: 5009
+      targetPort: 5009
+  type: LoadBalancer
+---
+# DailyRecipe
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dailyrec
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dailyrec
+  template:
+    metadata:
+      labels:
+        app: dailyrec
+    spec:
+      containers:
+        - name: dailyrec
+          image: docker.io/andyhcode/daily_rec:latest
+          ports:
+            - containerPort: 5010
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dailyrec-service
+spec:
+  selector:
+    app: dailyrec
+  ports:
+    - protocol: TCP
+      port: 5010
+      targetPort: 5010
+  type: LoadBalancer
+---
+# Database
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: docker.io/andyhcode/database:latest
+          ports:
+            - containerPort: 5011
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-service
+spec:
+  selector:
+    app: database
+  ports:
+    - protocol: TCP
+      port: 5011
+      targetPort: 5011
+  type: LoadBalancer
+---
+# GUI
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gui
+  template:
+    metadata:
+      labels:
+        app: gui
+    spec:
+      containers:
+        - name: gui
+          image: docker.io/andyhcode/gui:latest
+          ports:
+            - containerPort: 5020
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gui-service
+spec:
+  selector:
+    app: gui
+  ports:
+    - protocol: TCP
+      port: 5020
+      targetPort: 5020
+  type: LoadBalancer
+---
